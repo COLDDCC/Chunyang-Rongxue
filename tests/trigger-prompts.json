@@ -65,6 +65,18 @@
     {
       "prompt": "修复sitemap生成脚本。",
       "should_trigger": false
+    },
+    {
+      "prompt": "参考同行的页面，帮我优化这篇费用指南文章。",
+      "should_trigger": true
+    },
+    {
+      "prompt": "Benchmark competitor pricing pages and rewrite our landing page.",
+      "should_trigger": true
+    },
+    {
+      "prompt": "帮我把这篇文章的错别字改一下。",
+      "should_trigger": false
     }
   ]
 }

@@ -1,6 +1,9 @@
 # Evidence-based scoring
 
 ## Default weights (sum to 100)
+
+Product profile below. For a single article or landing page use the content profile in [content pages](content-pages.md).
+
 | Dimension | Weight |
 |---|---:|
 | Visual design | 15 |

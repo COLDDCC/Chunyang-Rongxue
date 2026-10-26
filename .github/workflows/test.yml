@@ -20,3 +20,6 @@ jobs:
         run: |
           python3 scripts/audit.py examples/case-01/offline-plan.json
           python3 scripts/render_report.py examples/sample-report.json /tmp/sample-report.md
+          python3 scripts/audit.py examples/case-02/report.json
+          python3 scripts/render_report.py examples/case-02/report.json /tmp/case-02.md
+          python3 scripts/check_numbers.py examples/case-02/page.md

@@ -52,6 +52,21 @@ Plans and the intentionally partial sample do not belong in acceptance CI.
 The Python validator additionally checks weight sums, N/A weights, references and
 priority relationships. Run it even when schema validation passes.
 
+## v1.2 additions (all optional, v1.1 reports stay valid)
+
+- `mode` may be `draft`: replacement files delivered without repository access. Draft never sets
+  `acceptance_eligible`; status is `draft_complete` or `draft_incomplete`.
+- `profile`: `product` (default) or `content`; see [content pages](content-pages.md).
+- `summary`: `primary_job`, `current_weakness`, `strongest_opportunity`, `innovation_hypothesis`,
+  `shortest_success_path` (nonempty strings; unknown keys rejected).
+- `business_goal`: `objective`, `conversion_action`, `success_metric` (all required when present).
+- `estimates`: array of `id`, `claim`, `value`, `basis`, `as_of` (YYYY-MM-DD), `disclosure`, optional
+  `sources` (HTTP(S) URLs). See [estimates](estimates.md).
+
+`render_report.py` renders summary, business goal and estimates, so the narrative report no longer
+needs to be written separately. `check_numbers.py page.md` checks Markdown table totals
+(exit 0 consistent, 1 mismatch, 2 unreadable).
+
 ## Optional structured trace
 
 Add `advantages` with unique `id`, HTTP(S) `source_url`, `observed_at` (YYYY-MM-DD),

@@ -127,3 +127,68 @@ class MalformedInputTests(unittest.TestCase):
         self.assertIn('Acceptance eligible: False', text)
         self.assertNotIn('<script>', text)
         self.assertIn('&#124;', text)
+
+
+class V12Tests(unittest.TestCase):
+    """v1.2: draft mode, content profile, business goal, summary and labelled estimates."""
+    def full(self):
+        d = base()
+        d.update(mode='draft', profile='content',
+                 summary={'primary_job': 'Know the total cost', 'current_weakness': 'Answer is scattered'},
+                 business_goal={'objective': 'Qualified consultations', 'conversion_action': 'Contact form',
+                                'success_metric': 'Form submissions per 1,000 visits'},
+                 estimates=[{'id': 'e1', 'claim': 'Round-trip flight', 'value': 'CNY 3,000–6,500',
+                             'basis': 'Public fare comparison range', 'as_of': '2026-10-26',
+                             'disclosure': 'Estimate; booking-day price applies',
+                             'sources': ['https://example.org/fares']}])
+        return d
+
+    def test_draft_is_never_accepted(self):
+        errors, r = validate(self.full())
+        self.assertEqual(errors, [])
+        self.assertEqual(r['assessment_status'], 'draft_complete')
+        self.assertFalse(r['acceptance_eligible'])
+        self.assertEqual((r['profile'], r['estimates']), ('content', 1))
+        d = self.full()
+        d['gates']['core_task'] = 'unknown'
+        self.assertEqual(validate(d)[1]['assessment_status'], 'draft_incomplete')
+
+    def test_unknown_profile_and_mode_rejected(self):
+        for key, value in (('profile', 'blog'), ('mode', 'ship')):
+            d = self.full()
+            d[key] = value
+            self.assertTrue(validate(d)[0])
+
+    def test_estimate_requires_basis_date_and_disclosure(self):
+        for field, value in (('basis', ''), ('disclosure', ' '), ('as_of', '2026-13-01'), ('sources', ['ftp://x'])):
+            d = self.full()
+            d['estimates'][0][field] = value
+            self.assertTrue(validate(d)[0], field)
+        d = self.full()
+        d['estimates'].append(dict(d['estimates'][0]))
+        self.assertTrue(validate(d)[0])
+
+    def test_summary_and_goal_shape(self):
+        d = self.full()
+        d['summary']['mood'] = 'x'
+        self.assertTrue(validate(d)[0])
+        d = self.full()
+        del d['business_goal']['success_metric']
+        self.assertTrue(validate(d)[0])
+
+    def test_v11_reports_stay_valid(self):
+        d = base()
+        self.assertEqual(validate(d)[1]['profile'], 'product')
+
+    def test_renderer_outputs_narrative_and_estimates(self):
+        import importlib.util
+        import sys
+        root = Path(__file__).resolve().parents[1]
+        sys.path.insert(0, str(root/'scripts'))
+        spec = importlib.util.spec_from_file_location('render_report', root/'scripts/render_report.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        text = module.render(self.full())
+        for needle in ('Profile: content', 'Answer is scattered', 'Contact form', 'Labelled estimates',
+                       'https://example.org/fares', 'draft_complete'):
+            self.assertIn(needle, text)

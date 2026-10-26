@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Chunyang Rongxue report v1.1",
+  "title": "Chunyang Rongxue report v1.2",
   "type": "object",
   "required": [
     "product",
@@ -17,6 +17,7 @@
     "mode": {
       "enum": [
         "plan",
+        "draft",
         "build"
       ]
     },
@@ -730,6 +731,108 @@
             "items": {
               "type": "string",
               "pattern": "\\S"
+            }
+          }
+        }
+      }
+    },
+    "profile": {
+      "enum": [
+        "product",
+        "content"
+      ],
+      "default": "product"
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "primary_job": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "current_weakness": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "strongest_opportunity": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "innovation_hypothesis": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "shortest_success_path": {
+          "type": "string",
+          "pattern": "\\S"
+        }
+      }
+    },
+    "business_goal": {
+      "type": "object",
+      "required": [
+        "objective",
+        "conversion_action",
+        "success_metric"
+      ],
+      "properties": {
+        "objective": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "conversion_action": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "success_metric": {
+          "type": "string",
+          "pattern": "\\S"
+        }
+      }
+    },
+    "estimates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "claim",
+          "value",
+          "basis",
+          "as_of",
+          "disclosure"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "\\S"
+          },
+          "claim": {
+            "type": "string",
+            "pattern": "\\S"
+          },
+          "value": {
+            "type": "string",
+            "pattern": "\\S"
+          },
+          "basis": {
+            "type": "string",
+            "pattern": "\\S"
+          },
+          "as_of": {
+            "type": "string",
+            "format": "date"
+          },
+          "disclosure": {
+            "type": "string",
+            "pattern": "\\S"
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^https?://[^/\\s]+"
             }
           }
         }

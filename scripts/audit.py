@@ -11,13 +11,20 @@ from urllib.parse import urlparse
 DIMENSIONS = ("visual", "ux", "functionality", "content", "seo", "performance_mobile", "reliability_accessibility")
 GATES = ("core_task", "security_privacy", "mobile_accessibility", "content_correctness", "technical_seo", "regressions", "deployment")
 STATES = ("pass", "fail", "unknown", "not_applicable")
+MODES = ("plan", "draft", "build")
+PROFILES = ("product", "content")
+SUMMARY_FIELDS = ("primary_job", "current_weakness", "strongest_opportunity", "innovation_hypothesis", "shortest_success_path")
+GOAL_FIELDS = ("objective", "conversion_action", "success_metric")
+ESTIMATE_FIELDS = ("id", "claim", "value", "basis", "as_of", "disclosure")
 
 def validate(report):
     errors = []
     if not isinstance(report, dict):
         return ["Report must be an object"], None
-    if report.get("mode") not in ("plan", "build"):
-        errors.append("mode must be plan or build")
+    if report.get("mode") not in MODES:
+        errors.append("mode must be plan, draft or build")
+    if report.get("profile", "product") not in PROFILES:
+        errors.append("profile must be product or content")
     if not isinstance(report.get("product"), str) or not report["product"].strip():
         errors.append("product must be nonempty")
     weights, scores, gates = (report.get(k) for k in ("weights", "scores", "gates"))
@@ -75,18 +82,71 @@ def validate(report):
     coverage = bool(scored) and set(scored) == set(DIMENSIONS) - excluded
     ready = coverage and all(v in {"pass", "not_applicable"} for v in gates.values())
     acceptance = report["mode"] == "build" and ready
+    mode = report["mode"]
+    if mode == "build":
+        status = "acceptance_eligible" if acceptance else "blocked"
+    else:
+        status = f"{mode}_complete" if ready else f"{mode}_incomplete"
     return [], {"scored_dimensions": len(scored), "coverage": "full" if coverage else "partial",
                 "weighted_score": round(partial, 2) if partial is not None else None,
                 "acceptance_eligible": acceptance,
-                "assessment_status": ("plan_complete" if ready else "plan_incomplete") if report["mode"] == "plan" else ("acceptance_eligible" if acceptance else "blocked"),
+                "assessment_status": status,
+                "profile": report.get("profile", "product"),
+                "estimates": len(report.get("estimates", [])),
                 "not_applicable_dimensions": sorted(excluded),
                 "covered_weight": covered_weight,
                 "failed_gates": [k for k, v in gates.items() if v == "fail"],
                 "unknown_gates": [k for k, v in gates.items() if v == "unknown"]}
 
+def _is_date(value):
+    try:
+        return isinstance(value, str) and date.fromisoformat(value).isoformat() == value
+    except ValueError:
+        return False
+
+
+def _text(value):
+    return isinstance(value, str) and bool(value.strip())
+
+
+def validate_narrative(report):
+    """Optional summary, business goal and labelled estimates (v1.2)."""
+    errors = []
+    summary = report.get("summary")
+    if summary is not None:
+        if not isinstance(summary, dict) or set(summary) - set(SUMMARY_FIELDS):
+            errors.append("summary must be an object with known fields only")
+        elif any(not _text(v) for v in summary.values()):
+            errors.append("summary fields must be nonempty strings")
+    goal = report.get("business_goal")
+    if goal is not None:
+        if not isinstance(goal, dict) or any(not _text(goal.get(f)) for f in GOAL_FIELDS):
+            errors.append("business_goal requires nonempty objective, conversion_action and success_metric")
+    estimates = report.get("estimates", [])
+    if not isinstance(estimates, list):
+        return errors + ["estimates must be an array"]
+    seen = set()
+    for item in estimates:
+        if not isinstance(item, dict):
+            errors.append("estimate must be object")
+            continue
+        for field in ESTIMATE_FIELDS:
+            if not _text(item.get(field)):
+                errors.append(f"estimate: nonempty {field} required")
+        if item.get("id") in seen:
+            errors.append("duplicate estimate id")
+        seen.add(item.get("id"))
+        if not _is_date(item.get("as_of")):
+            errors.append("estimate: as_of must be YYYY-MM-DD")
+        sources = item.get("sources", [])
+        if not isinstance(sources, list) or any(not isinstance(u, str) or urlparse(u).scheme not in {"http", "https"} or not urlparse(u).netloc for u in sources):
+            errors.append("estimate: sources must be HTTP(S) URLs")
+    return errors
+
+
 def validate_extensions(report):
     """Validate optional traceable advantages/roadmap without requiring verbose reports."""
-    errors = []
+    errors = validate_narrative(report)
     advantages = report.get("advantages", [])
     roadmap = report.get("roadmap", [])
     if not isinstance(advantages, list) or not isinstance(roadmap, list):

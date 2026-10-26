@@ -1,0 +1,268 @@
+{
+  "product": "Saipan IVF · 塞班冻卵费用 2026 指南 (/guides/egg-freezing-cost/)",
+  "mode": "draft",
+  "profile": "content",
+  "summary": {
+    "primary_job": "去塞班冻卵，一共要准备多少钱？哪些会另外收？",
+    "current_weakness": "答案分散在三处且只算到首年医疗费；没有行程、多年保存和人民币，读者算不出总额。",
+    "strongest_opportunity": "首屏答案卡 + 一次性/周期性费用分表（GoodRx、TreatCompare、港大 IVF）。",
+    "innovation_hypothesis": "竞品都没有跨境冻卵全程预算；三档预算 + 在岛天数 + 人民币，可能提高咨询意愿（待测）。",
+    "shortest_success_path": "答案卡 → 三档预算 → 发报告估个人预算（/contact/）。"
+  },
+  "business_goal": {
+    "objective": "带来有效的线下咨询",
+    "conversion_action": "在 /contact/ 发送年龄与 AMH/B 超报告",
+    "success_metric": "每千次访问的咨询提交数（上线前先建基线）"
+  },
+  "weights": {
+    "visual": 10,
+    "ux": 20,
+    "functionality": 20,
+    "content": 20,
+    "seo": 15,
+    "performance_mobile": 10,
+    "reliability_accessibility": 5
+  },
+  "scores": {
+    "content": {
+      "score": 78,
+      "evidence": "E1 页面文本抓取 2026-10-26：分项表 9000+3000~8000+800+800 与 13,600–18,600 区间、16,100 中值算术一致；医学结论引 HFEA/ASRM 且标注来源与核查日期；付款前 5 项与报价对比表实用。扣分：同一免责声明出现约 6 次；无多年保存总额；行程费用只列名目无数字；无人民币参照；元信息段落（证据如何使用）放在正文之前。"
+    },
+    "ux": {
+      "score": 62,
+      "evidence": "E1 基于文本结构（未做视觉截图）：有锚点目录；首屏先给 16,100 中值再给区间，区间与排除项被分散在三处；报价对比表与付款前 5 项内容重叠；唯一 CTA 在文末；正文无内联站内链接，/fees/ 预算工具只在来源区出现。"
+    },
+    "functionality": {
+      "score": 60,
+      "evidence": "E1：读者核心问题是『去塞班冻卵一共要准备多少钱』。页面回答了单周期医疗+首年保存，但未覆盖多年保存累计、行程/停留成本、人民币换算；站内 /fees/ 工具同样无保存年数、行程与人民币输入（抓取 /fees/ 2026-10-26）。"
+    },
+    "seo": {
+      "score": 64,
+      "evidence": "E1/E2 混合：title 含『塞班冻卵费用 2026』、meta description、canonical、og:type=article 可见；JSON-LD、hreflang、面包屑在抓取文本中不可见（抓取工具可能不显示 head 全部内容，需用原始 HTML 复核，见 R0）；无内联站内链接。"
+    }
+  },
+  "gates": {
+    "core_task": "unknown",
+    "security_privacy": "unknown",
+    "mobile_accessibility": "unknown",
+    "content_correctness": "unknown",
+    "technical_seo": "unknown",
+    "regressions": "not_applicable",
+    "deployment": "not_applicable"
+  },
+  "estimates": [
+    {
+      "id": "e1",
+      "claim": "单周期医疗费（周期+药+麻醉+首年保存）",
+      "value": "US$13,600–18,600",
+      "basis": "站点内部定价模型 src/data/pricing.ts",
+      "as_of": "2026-10-26",
+      "disclosure": "规划估算，以诊所书面报价为准",
+      "sources": [
+        "https://saipanivf.pages.dev/fees/"
+      ]
+    },
+    {
+      "id": "e2",
+      "claim": "上海—塞班往返机票（1 人，经停 1 次）",
+      "value": "CNY 3,000–6,500",
+      "basis": "公开机票比价页面近期低价区间",
+      "as_of": "2026-10-26",
+      "disclosure": "以预订当日价格为准",
+      "sources": [
+        "https://www.tianxun.com/routes/csha/46759144/shanghai-to-garapan.html"
+      ]
+    },
+    {
+      "id": "e3",
+      "claim": "加拉潘住宿每晚",
+      "value": "US$70–180",
+      "basis": "公开酒店比价页面的经济型至四星起价",
+      "as_of": "2026-10-26",
+      "disclosure": "淡旺季差异大，以预订为准",
+      "sources": [
+        "https://www.kayak.com/Garapan-Hotels.43545.hotel.ksp"
+      ]
+    },
+    {
+      "id": "e4",
+      "claim": "当地吃饭交通杂费每天",
+      "value": "US$30–60",
+      "basis": "编辑按住宿档次推算，无直接数据源",
+      "as_of": "2026-10-26",
+      "disclosure": "推算值"
+    },
+    {
+      "id": "e5",
+      "claim": "在岛天数",
+      "value": "12–16 天（前期监测在国内则 7–10 天）",
+      "basis": "冻卵一般流程：促排 9–12 天、夜针后约 36 小时取卵、观察 1–2 天",
+      "as_of": "2026-10-26",
+      "disclosure": "典型时长，不是个人日程；勿据此购买不可退机票",
+      "sources": [
+        "https://fertilityinstitute.com/egg-freezing-timeline/"
+      ]
+    },
+    {
+      "id": "e6",
+      "claim": "汇率",
+      "value": "1 USD ≈ 6.68 CNY",
+      "basis": "当日市场汇率",
+      "as_of": "2026-10-26",
+      "disclosure": "粗算，付款以报价币种当日汇率为准",
+      "sources": [
+        "https://poundsterlinglive.com/data/currencies/usd-pairs/USDCNY-exchange-rate"
+      ]
+    }
+  ],
+  "advantages": [
+    {
+      "id": "A1",
+      "source_url": "https://www.goodrx.com/conditions/fertility/cost-to-freeze-eggs",
+      "observed_at": "2026-10-26",
+      "evidence_level": "E1",
+      "transfer_decision": "Adapt",
+      "user_mechanism": "顶部 Key takeaways 盒子直接给出单周期区间、多周期总额与省钱提示，读者不用下滑就拿到答案。",
+      "our_synthesis": "首屏『30 秒答案卡』：先区间后中值，同行给人民币粗算与汇率日期，一行写清不含什么；不照搬其商业推广块。",
+      "success_metric": "375px 视口首屏可见：USD 区间 + 人民币粗算 + 排除项一行；免责声明出现次数从约 6 处降到 2 处（答案卡 + 文末数据说明）。"
+    },
+    {
+      "id": "A2",
+      "source_url": "https://www.treatcompare.com/egg-freezing",
+      "observed_at": "2026-10-26",
+      "evidence_level": "E1",
+      "transfer_decision": "Adapt",
+      "user_mechanism": "把『周期标价』与『第一年全包总额』分开展示，并单列 5–20 年保存成本表，避免低标价误导。",
+      "our_synthesis": "在分项表下加『保存年限累计』表（1/5/10 年），明确标注『假设年费不变，以合同为准』；不沿用其标题与正文数字不一致的问题。",
+      "success_metric": "页面出现 1/5/10 年累计总额且与分项表算术一致（脚本或人工复核通过）。"
+    },
+    {
+      "id": "A3",
+      "source_url": "https://hkuivf.hku.hk/en/services/fertility-preservation/charging/",
+      "observed_at": "2026-10-26",
+      "evidence_level": "E1",
+      "transfer_decision": "Adopt",
+      "user_mechanism": "用『首年 / 之后每 2 年』的表格区分一次性与周期性费用，并用『~』标记约数。",
+      "our_synthesis": "分项表增加『收费性质』列（一次性 / 每年 / 按处方浮动），约数统一加『约』。",
+      "success_metric": "分项表每行都有收费性质标注；读者测试中能正确回答『哪些费用每年都要交』。"
+    },
+    {
+      "id": "A4",
+      "source_url": "https://www.nuwacare.com/en/health-education/egg-freezing-taiwan-for-singaporeans",
+      "observed_at": "2026-10-26",
+      "evidence_level": "E1",
+      "transfer_decision": "Adapt",
+      "user_mechanism": "跨境就医读者天然会拿本地价格做对比；该页给出本地 vs 海外对比和两次到访的时间线。",
+      "our_synthesis": "加一张『其他地区公开价格参照』表，只收有官方/机构页面来源的数字，保留原币种、写明适用条件与口径差异，不做省钱百分比；去掉其无来源节省率、表文不一致等问题。",
+      "success_metric": "参照表每行有来源链接与核查日期；不出现任何未注明来源的节省比例。"
+    },
+    {
+      "id": "A5",
+      "source_url": "https://www.goodrx.com/conditions/fertility/cost-to-freeze-eggs",
+      "observed_at": "2026-10-26",
+      "evidence_level": "E1",
+      "transfer_decision": "Adapt",
+      "user_mechanism": "署名护理作者 + 医生审核 + 编辑说明，提升医疗内容可信度（YMYL）。",
+      "our_synthesis": "如有真实执业医生愿意审核，增加『医学审核：姓名/资质/审核日期』；没有就保持现状，绝不虚构审核人。",
+      "success_metric": "医学审核信息可验证（资质可查）或明确保持『内容团队』署名。"
+    },
+    {
+      "id": "A6",
+      "source_url": "https://medparkhospital.com/zh-CN/online-store/egg-freezing-package",
+      "observed_at": "2026-10-26",
+      "evidence_level": "E1",
+      "transfer_decision": "Adapt",
+      "user_mechanism": "套餐条款写明价格仅限泰国籍及在泰居住外籍人士、不含药物、不可退款——说明海外患者看到的公开价不一定适用自己。",
+      "our_synthesis": "付款前清单加一条『这份价格是否适用外籍/跨境患者』，并在参照表里用该例子说明为什么要书面报价。",
+      "success_metric": "付款前清单含『适用人群』核对项。"
+    },
+    {
+      "id": "A7",
+      "source_url": "https://www.treatcompare.com/egg-freezing",
+      "observed_at": "2026-10-26",
+      "evidence_level": "E1",
+      "transfer_decision": "Reject",
+      "user_mechanism": "竞品普遍存在：meta 与正文数字不一致、无数据支持的『成功率最高』、大量商业推广块、无来源的节省率与成功率营销数字。",
+      "our_synthesis": "不引入任何成功率营销数字、排名或节省百分比；保持现有『来源+核查日期』的诚实口径，这正是本页对所有竞品的差异化优势。",
+      "success_metric": "修改后全文无未注明来源的成功率/排名/节省率。"
+    }
+  ],
+  "roadmap": [
+    {
+      "id": "R0",
+      "task": "用原始 HTML 复核 JSON-LD、hreflang、面包屑是否存在（本次抓取工具无法确认 head 内容）",
+      "priority": "P0",
+      "kind": "validate",
+      "success_criteria": "在仓库源码或 view-source 中确认三项各自存在/缺失，并用 Rich Results Test 验证。"
+    },
+    {
+      "id": "R1",
+      "task": "重写首屏为『30 秒答案卡』，合并重复免责声明为答案卡一句 + 文末『数据说明』",
+      "priority": "P0",
+      "kind": "implement",
+      "advantage_ids": [
+        "A1"
+      ],
+      "success_criteria": "375px 首屏含区间、人民币粗算、排除项；免责声明 ≤2 处；所有数字与 pricing.ts 一致。"
+    },
+    {
+      "id": "R2",
+      "task": "分项表增加收费性质列，并新增 1/5/10 年保存累计表",
+      "priority": "P0",
+      "kind": "implement",
+      "advantage_ids": [
+        "A2",
+        "A3"
+      ],
+      "success_criteria": "累计表由 pricing.ts 计算生成（非手填），单元测试校验与分项表一致。"
+    },
+    {
+      "id": "R3",
+      "task": "新增『其他地区公开价格参照』表（香港公营、新加坡公立、曼谷私立套餐），注明来源、日期与适用条件",
+      "priority": "P1",
+      "kind": "implement",
+      "advantage_ids": [
+        "A4",
+        "A6"
+      ],
+      "success_criteria": "每行可点击来源 + 核查日期；编辑确认该表符合站点立场后再上线。"
+    },
+    {
+      "id": "R5",
+      "task": "在费用表后加情境 CTA（去 /fees/ 组合预算、去 /guides/quotation/ 报价清单），正文加内联站内链接",
+      "priority": "P1",
+      "kind": "implement",
+      "advantage_ids": [
+        "A1"
+      ],
+      "success_criteria": "正文至少 3 处内联站内链接；/fees/ 点击率较基线有可测变化（需先建埋点基线）。"
+    },
+    {
+      "id": "R6",
+      "task": "反向创新：/fees/ 冻卵路径增加保存年数、行程（用户自填机票/住宿/天数）与人民币显示，做成『全程预算』",
+      "priority": "P2",
+      "kind": "implement",
+      "advantage_ids": [
+        "A2"
+      ],
+      "success_criteria": "5 名目标读者任务测试：能在 2 分钟内算出含 5 年保存与行程的总额；竞品均无此能力（假设，待测）。"
+    },
+    {
+      "id": "R7",
+      "task": "如有真实执业医生，增加医学审核署名与审核日期",
+      "priority": "P2",
+      "kind": "implement",
+      "advantage_ids": [
+        "A5"
+      ],
+      "success_criteria": "审核人资质可公开查验；否则不实施。"
+    },
+    {
+      "id": "R4",
+      "task": "行程费改用标注估算上线（e2–e4），每季度复核区间",
+      "priority": "P1",
+      "kind": "implement",
+      "success_criteria": "估算一览表含依据与日期；check_numbers 通过；季度复核记录"
+    }
+  ]
+}

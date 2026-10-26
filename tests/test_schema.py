@@ -22,6 +22,15 @@ class SchemaTests(unittest.TestCase):
             self.validator.validate(json.loads(path.read_text()))
         self.validator.validate(base())
         self.validator.validate(test_boundaries.BoundaryTests().traced())
+        self.validator.validate(test_boundaries.V12Tests().full())
+
+    def test_v12_invalid_estimate_and_mode(self):
+        d = test_boundaries.V12Tests().full()
+        d['estimates'][0]['as_of'] = 'soon'
+        self.assertTrue(list(self.validator.iter_errors(d)))
+        d = test_boundaries.V12Tests().full()
+        d['mode'] = 'ship'
+        self.assertTrue(list(self.validator.iter_errors(d)))
 
     def test_invalid_score_evidence_and_na(self):
         for value in ({'score':80}, {'score':101,'evidence':'x'}, {'not_applicable':True}, {'not_applicable':True,'reason':'private','score':80}):
