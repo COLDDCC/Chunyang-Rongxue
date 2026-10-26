@@ -1,0 +1,28 @@
+{
+  "product": "Example tool (illustrative; not a live audit)",
+  "mode": "plan",
+  "weights": {
+    "visual": 15,
+    "ux": 20,
+    "functionality": 20,
+    "content": 15,
+    "seo": 10,
+    "performance_mobile": 10,
+    "reliability_accessibility": 10
+  },
+  "scores": {
+    "visual": {
+      "score": 75,
+      "evidence": "Illustrative only: replace with genuine observations"
+    }
+  },
+  "gates": {
+    "core_task": "unknown",
+    "security_privacy": "unknown",
+    "mobile_accessibility": "unknown",
+    "content_correctness": "unknown",
+    "technical_seo": "not_applicable",
+    "regressions": "unknown",
+    "deployment": "not_applicable"
+  }
+}
