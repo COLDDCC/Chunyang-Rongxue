@@ -10,7 +10,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install schema QA dependency
+        run: python3 -m pip install jsonschema==4.23.0
       - name: Validate example report
         run: python3 scripts/audit.py examples/sample-report.json
       - name: Run tests
         run: python3 -m unittest discover -s tests -v
+      - name: Validate offline forward test and render report
+        run: |
+          python3 scripts/audit.py examples/case-01/offline-plan.json
+          python3 scripts/render_report.py examples/sample-report.json /tmp/sample-report.md

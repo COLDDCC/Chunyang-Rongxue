@@ -4,7 +4,7 @@
 
 A reusable competitive advantage fusion and product evolution Agent Skill for websites, mini programs, SaaS, and digital tools.
 
-See [SKILL.md](SKILL.md) for agent instructions, [the origin story](docs/origin.md), and [the workflow](references/competitor-discovery.md).
+See [SKILL.md](SKILL.md) for agent instructions, [the origin story](docs/origin.md), and [the complete workflow](SKILL.md#five-stage-loop-观吸化创验).
 
 **Principle:** learn from many strong products, retain only what serves users, integrate coherent advantages, and verify outcomes instead of claiming unmeasured superiority.
 
@@ -22,4 +22,35 @@ The skill supports **Plan** (research without changing code) and **Build** (auth
 - Adjustable, weighted 100-point scorecard with non-negotiable quality gates
 - Practical templates, acceptance checks, and an offline report validation script
 
-See [LICENSE](LICENSE) for reuse terms when available; no license is implied by the repository being public.
+## Install (v1.1.0)
+
+Clone into your agent's skill directory using the matching folder name:
+
+```bash
+# Claude Code: personal skills
+ git clone https://github.com/COLDDCC/Chunyang-Rongxue.git ~/.claude/skills/chunyang-rongxue
+# Codex: personal skills (use this alternative, not both)
+ git clone https://github.com/COLDDCC/Chunyang-Rongxue.git ~/.codex/skills/chunyang-rongxue
+```
+
+Follow your host's skill discovery rules; copying these files does not prove activation.
+Python 3.10+ is sufficient for the audit and renderer; no runtime dependencies.
+Run `python3 -m unittest discover -s tests -v` and
+`python3 scripts/audit.py examples/sample-report.json` from the skill root.
+For build acceptance add `--strict`; see [contract and exit codes](references/audit-format.md).
+The sample is illustrative and deliberately incomplete.
+
+See [evaluation prompts](tests/trigger-prompts.json) and [case protocol](examples/case-01/README.md).
+A positive description review is not a measured trigger rate.
+Repository releases can include documentation; agents only need SKILL.md and its linked resources.
+
+## v1.1.0 changes
+
+Fix explicit N/A coverage, prevent Plan acceptance, and add strict build exit codes.
+Add trace validation, JSON Schema, Markdown rendering, Chinese triggers, 16 routing
+fixtures, regression evidence and a no-evidence forward test. Existing report JSON
+remains valid; Plan acceptance behavior is intentionally corrected. Schema QA uses
+`jsonschema==4.23.0` as a development-only dependency (installed in CI).
+A full external product comparison and measured trigger rate remain pending.
+
+Licensed under [MIT](LICENSE).

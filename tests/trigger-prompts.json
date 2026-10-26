@@ -1,0 +1,70 @@
+{
+  "status": "fixtures_only_not_measured",
+  "protocol": "Evaluate host skill selection with description exposed and body hidden; record selected/not selected, false positives, false negatives, host/model/date. Do not replace routing evaluation with keyword matching.",
+  "cases": [
+    {
+      "prompt": "使用春阳融雪分析我们的网站，先出方案。",
+      "should_trigger": true
+    },
+    {
+      "prompt": "学习竞品优点，优化这个工具。",
+      "should_trigger": true
+    },
+    {
+      "prompt": "比较三家竞品的注册体验并提出改进。",
+      "should_trigger": true
+    },
+    {
+      "prompt": "借鉴这些网站的首屏，改进我们的产品。",
+      "should_trigger": true
+    },
+    {
+      "prompt": "Analyze competitors and synthesize a better onboarding flow.",
+      "should_trigger": true
+    },
+    {
+      "prompt": "先分析竞品，再实施已批准的改进。",
+      "should_trigger": true
+    },
+    {
+      "prompt": "研究对手的SEO信息架构并提出适合我们的方案。",
+      "should_trigger": true
+    },
+    {
+      "prompt": "对多家SaaS进行有证据的产品审计。",
+      "should_trigger": true
+    },
+    {
+      "prompt": "把这段日语翻译成中文。",
+      "should_trigger": false
+    },
+    {
+      "prompt": "修复这个函数的空指针异常。",
+      "should_trigger": false
+    },
+    {
+      "prompt": "给按钮换一个颜色。",
+      "should_trigger": false
+    },
+    {
+      "prompt": "解释什么是竞品分析，不需要实际调研。",
+      "should_trigger": false
+    },
+    {
+      "prompt": "计算本月收入。",
+      "should_trigger": false
+    },
+    {
+      "prompt": "检查这个JSON是否合法。",
+      "should_trigger": false
+    },
+    {
+      "prompt": "写一封求职邮件。",
+      "should_trigger": false
+    },
+    {
+      "prompt": "修复sitemap生成脚本。",
+      "should_trigger": false
+    }
+  ]
+}

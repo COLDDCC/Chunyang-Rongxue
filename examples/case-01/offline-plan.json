@@ -1,0 +1,142 @@
+{
+  "product": "员工登录使用的内部报销工具（未提供可访问产品）",
+  "mode": "plan",
+  "scope": {
+    "primary_job": "员工提交合规报销并追踪处理进度",
+    "implementation_authorized": false,
+    "deployment_authorized": false,
+    "implemented": false,
+    "tested_product": false,
+    "deployed": false
+  },
+  "evidence_limits": [
+    "仅依据用户给出的内部员工登录场景；未观察产品、竞品页面、截图、代码或任务数据。",
+    "当前弱点未知；所有方案均为待验证假设，未认定任何竞品具有所列能力或优于本产品。",
+    "竞品名仅为后续调研候选；未检索或验证其当前功能、价格、效果。",
+    "日期为方案编写日期，不是竞品观察日期。校验器只检查报告结构与规则，不证明证据真实或产品达标。"
+  ],
+  "prepared_at": "2026-10-26",
+  "weights": {
+    "visual": 15,
+    "ux": 25,
+    "functionality": 25,
+    "content": 15,
+    "seo": 0,
+    "performance_mobile": 10,
+    "reliability_accessibility": 10
+  },
+  "weight_reason": "仅供员工登录，无公开获客与索引目标，SEO不适用；原SEO 10点分配至UX和功能各5点。其余六维未评估。",
+  "scores": {
+    "visual": {
+      "score": null,
+      "evidence": ""
+    },
+    "ux": {
+      "score": null,
+      "evidence": ""
+    },
+    "functionality": {
+      "score": null,
+      "evidence": ""
+    },
+    "content": {
+      "score": null,
+      "evidence": ""
+    },
+    "performance_mobile": {
+      "score": null,
+      "evidence": ""
+    },
+    "reliability_accessibility": {
+      "score": null,
+      "evidence": ""
+    },
+    "seo": {
+      "score": null,
+      "not_applicable": true,
+      "reason": "内部员工登录工具，无公开索引与获客目标。"
+    }
+  },
+  "gates": {
+    "core_task": "unknown",
+    "security_privacy": "unknown",
+    "mobile_accessibility": "unknown",
+    "content_correctness": "unknown",
+    "technical_seo": "not_applicable",
+    "regressions": "unknown",
+    "deployment": "not_applicable"
+  },
+  "advantages": [],
+  "candidate_matrix": [
+    {
+      "candidate": "SAP Concur（调研候选，未观察）",
+      "evidence_level": "E3",
+      "hypothesis": "提交前展示适用政策、缺失项和规则原因，可减少返工。",
+      "our_synthesis": "按当前报销单给出可操作检查清单，保留人工例外说明。",
+      "risk": "规则维护错误或误拦截。",
+      "transfer_decision": "Experiment",
+      "verification": "核验真实规则与异常流程；比较首次提交通过率和错误拦截率。"
+    },
+    {
+      "candidate": "Expensify（调研候选，未观察）",
+      "evidence_level": "E3",
+      "hypothesis": "票据输入辅助、草稿恢复与重复录入提示，可减少输入时间。",
+      "our_synthesis": "保留原票据及可编辑字段，识别结果由员工确认，失败可手工填写。",
+      "risk": "识别错误、敏感信息泄露、重复判断误报。",
+      "transfer_decision": "Experiment",
+      "verification": "同一脱敏票据集比较人工录入与辅助录入耗时、修正率和恢复成功率。"
+    },
+    {
+      "candidate": "Zoho Expense（调研候选，未观察）",
+      "evidence_level": "E3",
+      "hypothesis": "明确当前处理人、退回原因与下一步，可减少进度询问。",
+      "our_synthesis": "统一状态时间线及补充材料入口，待办只显示员工可执行操作。",
+      "risk": "审批与付款状态不同步或通知过量。",
+      "transfer_decision": "Experiment",
+      "verification": "核对状态事件来源，比较状态理解率和每百单进度咨询次数。"
+    }
+  ],
+  "innovation_hypothesis": "把政策预检、可恢复草稿和可行动进度串成同一任务路径，可能减少员工在多个入口之间切换；尚不能声称超越竞品。",
+  "roadmap": [
+    {
+      "id": "P0-baseline",
+      "task": "Plan：获得脱敏流程、政策及可访问参考资料，明确员工/审批人/财务权限；建立相同任务与设备下的基线。",
+      "priority": "P0",
+      "kind": "validate",
+      "advantage_ids": [],
+      "impact": "高",
+      "effort": "低至中（估算）",
+      "dependencies": "测试授权、脱敏样本、财务规则负责人",
+      "success_criteria": "记录提交、退回修改、查进度三类任务的成功率、耗时、返工率；至少3个候选来源按可访问性核验，无资料者继续标E3。"
+    },
+    {
+      "id": "P1-prototype",
+      "task": "Plan：用可交互原型验证统一提交与进度流程；当前只列方案，不制作或实施。",
+      "priority": "P1",
+      "kind": "validate",
+      "advantage_ids": [],
+      "impact": "高（假设）",
+      "effort": "中（估算）",
+      "dependencies": "P0基线与规则核验完成；另行授权原型制作",
+      "success_criteria": "建议招募5–8名不同熟练度员工完成相同三类任务；目标为中位提交耗时较基线降低20%、任务成功率不下降；样本仅作方向性证据。"
+    },
+    {
+      "id": "P2-build-gates",
+      "task": "后续Build（未授权）：证据与原型通过后另行确定实施范围、测试、灰度与回滚方案；本次不执行。",
+      "priority": "P2",
+      "kind": "validate",
+      "advantage_ids": [],
+      "impact": "待验证",
+      "effort": "待技术调研",
+      "dependencies": "独立实施授权、目标分支、可回滚发布方式",
+      "success_criteria": "实施前确认跨角色访问拒绝、金额及币种准确、重复提交防护、弱网草稿恢复、键盘与移动端任务检查；基线和结果均留证，适用门槛全部通过后才可验收。"
+    }
+  ],
+  "quality_gate_notes": {
+    "before": "除SEO/部署不适用外，其余门槛均未测试。",
+    "after": "尚未实施，前后对比结果不存在；上述数字均为建议目标。",
+    "security_privacy": "员工登录本身不证明安全；后续验证单据、附件、导出与审批权限和审计记录。",
+    "rollback": "本次无代码/配置变更，无需回滚；将来实施须保留旧流程和数据兼容回退。"
+  },
+  "validator_scope": "运行仓库 scripts/audit.py，不使用 --strict；严格验收用于build，plan不应被解释为实施验收。"
+}

@@ -1,6 +1,6 @@
 ---
 name: chunyang-rongxue
-description: Research competing digital products, extract and integrate their strongest verified advantages, and improve websites, mini programs, SaaS, or tools using a measurable plan/build workflow. Use when the user asks to learn from competitors, surpass rival products, optimize UI/UX, SEO, performance, or conduct a multi-competitor product audit.
+description: 春阳融雪：用于竞品分析、学习竞品优点、融合多家优势并验证产品改进。适用于“先学竞品再超越对手”等请求；不用于单纯翻译、局部修错或不涉及竞品的常规任务。 Research competing digital products, extract and integrate their strongest verified advantages, and improve websites, mini programs, SaaS, or tools using a measurable plan/build workflow. Use when the user asks to learn from competitors, surpass rival products, optimize UI/UX, SEO, performance, or conduct a multi-competitor product audit.
 ---
 # 春阳融雪 · Chunyang Rongxue
 
@@ -26,7 +26,7 @@ Identify: product URL/repository, target users, primary job-to-be-done, competit
 3. 融会贯通: synthesize into one understandable design system; avoid a collage of interfaces.
 4. 反向创新: improve at least one important task beyond the reference, where verified.
 5. 数据验收: compare observed metrics, user flows, and test evidence; label unmeasured claims.
-6. 持续进化: establish a baseline, preserve regressions checks, and learn across iterations.
+6. 持续进化: establish a baseline, maintain regression checks, and learn across iterations.
 
 ## Default product preferences (override when product/user requires)
 - First screen should answer the primary user question or offer direct task entry.
@@ -50,6 +50,6 @@ Use [report template](assets/report-template.md) and [matrix template](assets/ad
 - Before/after quality gates, test results, unresolved risks, evidence links, and rollback plan.
 - Clearly distinguish **observed**, **inferred**, **planned**, **implemented**, **tested**, and **deployed**.
 
-For repeatability validate report JSON using `python3 scripts/audit.py path/to/report.json`. Schema and examples: [audit format](references/audit-format.md). The script validates the scorecard and gates, not the truth of observations.
+For repeatability validate report JSON using `python3 scripts/audit.py path/to/report.json`. Use `--strict` in acceptance CI (build only; exit 3 when blocked). Optional `advantages` and `roadmap` fields connect observations to implementation and success criteria; keep narrative concise. Schema: [report schema](schema/report.schema.json). Contract and examples: [audit format](references/audit-format.md). The script validates the scorecard and gates, not the truth of observations.
 
 The name's cultural inspiration and important distinction between the novel and this metaphor are recorded in [origin](docs/origin.md).

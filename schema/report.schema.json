@@ -1,0 +1,740 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Chunyang Rongxue report v1.1",
+  "type": "object",
+  "required": [
+    "product",
+    "mode",
+    "weights",
+    "scores",
+    "gates"
+  ],
+  "properties": {
+    "product": {
+      "type": "string",
+      "pattern": "\\S"
+    },
+    "mode": {
+      "enum": [
+        "plan",
+        "build"
+      ]
+    },
+    "weights": {
+      "type": "object",
+      "required": [
+        "visual",
+        "ux",
+        "functionality",
+        "content",
+        "seo",
+        "performance_mobile",
+        "reliability_accessibility"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "visual": {
+          "type": "number",
+          "minimum": 0
+        },
+        "ux": {
+          "type": "number",
+          "minimum": 0
+        },
+        "functionality": {
+          "type": "number",
+          "minimum": 0
+        },
+        "content": {
+          "type": "number",
+          "minimum": 0
+        },
+        "seo": {
+          "type": "number",
+          "minimum": 0
+        },
+        "performance_mobile": {
+          "type": "number",
+          "minimum": 0
+        },
+        "reliability_accessibility": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "scores": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "visual": {
+          "type": "object",
+          "properties": {
+            "score": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "evidence": {
+              "type": "string"
+            },
+            "not_applicable": {
+              "type": "boolean"
+            },
+            "reason": {
+              "type": "string",
+              "pattern": "\\S"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "not_applicable": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "not_applicable"
+                ]
+              },
+              "then": {
+                "required": [
+                  "reason"
+                ],
+                "properties": {
+                  "score": {
+                    "type": "null"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "score": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "score"
+                ]
+              },
+              "then": {
+                "required": [
+                  "evidence"
+                ],
+                "properties": {
+                  "evidence": {
+                    "type": "string",
+                    "pattern": "\\S"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "ux": {
+          "type": "object",
+          "properties": {
+            "score": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "evidence": {
+              "type": "string"
+            },
+            "not_applicable": {
+              "type": "boolean"
+            },
+            "reason": {
+              "type": "string",
+              "pattern": "\\S"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "not_applicable": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "not_applicable"
+                ]
+              },
+              "then": {
+                "required": [
+                  "reason"
+                ],
+                "properties": {
+                  "score": {
+                    "type": "null"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "score": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "score"
+                ]
+              },
+              "then": {
+                "required": [
+                  "evidence"
+                ],
+                "properties": {
+                  "evidence": {
+                    "type": "string",
+                    "pattern": "\\S"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "functionality": {
+          "type": "object",
+          "properties": {
+            "score": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "evidence": {
+              "type": "string"
+            },
+            "not_applicable": {
+              "type": "boolean"
+            },
+            "reason": {
+              "type": "string",
+              "pattern": "\\S"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "not_applicable": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "not_applicable"
+                ]
+              },
+              "then": {
+                "required": [
+                  "reason"
+                ],
+                "properties": {
+                  "score": {
+                    "type": "null"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "score": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "score"
+                ]
+              },
+              "then": {
+                "required": [
+                  "evidence"
+                ],
+                "properties": {
+                  "evidence": {
+                    "type": "string",
+                    "pattern": "\\S"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "content": {
+          "type": "object",
+          "properties": {
+            "score": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "evidence": {
+              "type": "string"
+            },
+            "not_applicable": {
+              "type": "boolean"
+            },
+            "reason": {
+              "type": "string",
+              "pattern": "\\S"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "not_applicable": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "not_applicable"
+                ]
+              },
+              "then": {
+                "required": [
+                  "reason"
+                ],
+                "properties": {
+                  "score": {
+                    "type": "null"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "score": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "score"
+                ]
+              },
+              "then": {
+                "required": [
+                  "evidence"
+                ],
+                "properties": {
+                  "evidence": {
+                    "type": "string",
+                    "pattern": "\\S"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "seo": {
+          "type": "object",
+          "properties": {
+            "score": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "evidence": {
+              "type": "string"
+            },
+            "not_applicable": {
+              "type": "boolean"
+            },
+            "reason": {
+              "type": "string",
+              "pattern": "\\S"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "not_applicable": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "not_applicable"
+                ]
+              },
+              "then": {
+                "required": [
+                  "reason"
+                ],
+                "properties": {
+                  "score": {
+                    "type": "null"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "score": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "score"
+                ]
+              },
+              "then": {
+                "required": [
+                  "evidence"
+                ],
+                "properties": {
+                  "evidence": {
+                    "type": "string",
+                    "pattern": "\\S"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "performance_mobile": {
+          "type": "object",
+          "properties": {
+            "score": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "evidence": {
+              "type": "string"
+            },
+            "not_applicable": {
+              "type": "boolean"
+            },
+            "reason": {
+              "type": "string",
+              "pattern": "\\S"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "not_applicable": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "not_applicable"
+                ]
+              },
+              "then": {
+                "required": [
+                  "reason"
+                ],
+                "properties": {
+                  "score": {
+                    "type": "null"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "score": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "score"
+                ]
+              },
+              "then": {
+                "required": [
+                  "evidence"
+                ],
+                "properties": {
+                  "evidence": {
+                    "type": "string",
+                    "pattern": "\\S"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "reliability_accessibility": {
+          "type": "object",
+          "properties": {
+            "score": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "evidence": {
+              "type": "string"
+            },
+            "not_applicable": {
+              "type": "boolean"
+            },
+            "reason": {
+              "type": "string",
+              "pattern": "\\S"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "not_applicable": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "not_applicable"
+                ]
+              },
+              "then": {
+                "required": [
+                  "reason"
+                ],
+                "properties": {
+                  "score": {
+                    "type": "null"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "score": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "score"
+                ]
+              },
+              "then": {
+                "required": [
+                  "evidence"
+                ],
+                "properties": {
+                  "evidence": {
+                    "type": "string",
+                    "pattern": "\\S"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "gates": {
+      "type": "object",
+      "required": [
+        "core_task",
+        "security_privacy",
+        "mobile_accessibility",
+        "content_correctness",
+        "technical_seo",
+        "regressions",
+        "deployment"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "core_task": {
+          "enum": [
+            "pass",
+            "fail",
+            "unknown",
+            "not_applicable"
+          ]
+        },
+        "security_privacy": {
+          "enum": [
+            "pass",
+            "fail",
+            "unknown",
+            "not_applicable"
+          ]
+        },
+        "mobile_accessibility": {
+          "enum": [
+            "pass",
+            "fail",
+            "unknown",
+            "not_applicable"
+          ]
+        },
+        "content_correctness": {
+          "enum": [
+            "pass",
+            "fail",
+            "unknown",
+            "not_applicable"
+          ]
+        },
+        "technical_seo": {
+          "enum": [
+            "pass",
+            "fail",
+            "unknown",
+            "not_applicable"
+          ]
+        },
+        "regressions": {
+          "enum": [
+            "pass",
+            "fail",
+            "unknown",
+            "not_applicable"
+          ]
+        },
+        "deployment": {
+          "enum": [
+            "pass",
+            "fail",
+            "unknown",
+            "not_applicable"
+          ]
+        }
+      }
+    },
+    "advantages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "source_url",
+          "observed_at",
+          "user_mechanism",
+          "our_synthesis",
+          "success_metric",
+          "evidence_level",
+          "transfer_decision"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "\\S"
+          },
+          "source_url": {
+            "type": "string",
+            "pattern": "^https?://[^/\\s]+"
+          },
+          "observed_at": {
+            "type": "string",
+            "format": "date",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "user_mechanism": {
+            "type": "string",
+            "pattern": "\\S"
+          },
+          "our_synthesis": {
+            "type": "string",
+            "pattern": "\\S"
+          },
+          "success_metric": {
+            "type": "string",
+            "pattern": "\\S"
+          },
+          "evidence_level": {
+            "enum": [
+              "E1",
+              "E2",
+              "E3"
+            ]
+          },
+          "transfer_decision": {
+            "enum": [
+              "Adopt",
+              "Adapt",
+              "Experiment",
+              "Reject"
+            ]
+          }
+        }
+      }
+    },
+    "roadmap": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "task",
+          "success_criteria",
+          "priority",
+          "kind"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "\\S"
+          },
+          "task": {
+            "type": "string",
+            "pattern": "\\S"
+          },
+          "success_criteria": {
+            "type": "string",
+            "pattern": "\\S"
+          },
+          "priority": {
+            "enum": [
+              "P0",
+              "P1",
+              "P2"
+            ]
+          },
+          "kind": {
+            "enum": [
+              "validate",
+              "implement"
+            ]
+          },
+          "advantage_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "\\S"
+            }
+          }
+        }
+      }
+    }
+  },
+  "$comment": "Run scripts/audit.py for cross-field rules: weight total, N/A weight, unique IDs, references and E3 priority. Schema cannot prove observations true."
+}

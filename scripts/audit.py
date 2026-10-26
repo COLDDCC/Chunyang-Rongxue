@@ -1,19 +1,22 @@
 #!/usr/bin/env python3
 """Validate a Chunyang Rongxue audit report. Standard library only."""
+import argparse
 import json
 import math
 import sys
 from pathlib import Path
+from datetime import date
+from urllib.parse import urlparse
 
 DIMENSIONS = ("visual", "ux", "functionality", "content", "seo", "performance_mobile", "reliability_accessibility")
 GATES = ("core_task", "security_privacy", "mobile_accessibility", "content_correctness", "technical_seo", "regressions", "deployment")
-STATES = {"pass", "fail", "unknown", "not_applicable"}
+STATES = ("pass", "fail", "unknown", "not_applicable")
 
 def validate(report):
     errors = []
     if not isinstance(report, dict):
         return ["Report must be an object"], None
-    if report.get("mode") not in {"plan", "build"}:
+    if report.get("mode") not in ("plan", "build"):
         errors.append("mode must be plan or build")
     if not isinstance(report.get("product"), str) or not report["product"].strip():
         errors.append("product must be nonempty")
@@ -34,9 +37,20 @@ def validate(report):
     if set(scores) - set(DIMENSIONS):
         errors.append("unknown score dimensions")
     scored = {}
+    excluded = set()
     for key, item in scores.items():
         if not isinstance(item, dict):
             errors.append(f"{key}: score entry must be object")
+            continue
+        na = item.get("not_applicable", False)
+        if not isinstance(na, bool):
+            errors.append(f"{key}: not_applicable must be boolean")
+        if na is True:
+            if weights.get(key) != 0 or item.get("score") is not None:
+                errors.append(f"{key}: N/A requires zero weight and no score")
+            if not isinstance(item.get("reason"), str) or not item["reason"].strip():
+                errors.append(f"{key}: N/A requires a reason")
+            excluded.add(key)
             continue
         n = item.get("score")
         if n is None:
@@ -53,24 +67,91 @@ def validate(report):
     for k in GATES:
         if gates.get(k) not in STATES:
             errors.append(f"invalid gate: {k}")
+    errors.extend(validate_extensions(report))
     if errors:
         return errors, None
     covered_weight = sum(weights[k] for k in scored)
     partial = sum(weights[k] * v for k, v in scored.items()) / covered_weight if covered_weight else None
-    coverage = len(scored) == len(DIMENSIONS)
-    acceptance = coverage and all(v in {"pass", "not_applicable"} for v in gates.values())
+    coverage = bool(scored) and set(scored) == set(DIMENSIONS) - excluded
+    ready = coverage and all(v in {"pass", "not_applicable"} for v in gates.values())
+    acceptance = report["mode"] == "build" and ready
     return [], {"scored_dimensions": len(scored), "coverage": "full" if coverage else "partial",
                 "weighted_score": round(partial, 2) if partial is not None else None,
                 "acceptance_eligible": acceptance,
+                "assessment_status": ("plan_complete" if ready else "plan_incomplete") if report["mode"] == "plan" else ("acceptance_eligible" if acceptance else "blocked"),
+                "not_applicable_dimensions": sorted(excluded),
+                "covered_weight": covered_weight,
                 "failed_gates": [k for k, v in gates.items() if v == "fail"],
                 "unknown_gates": [k for k, v in gates.items() if v == "unknown"]}
 
-def main():
-    if len(sys.argv) != 2:
-        print("Usage: python3 scripts/audit.py report.json", file=sys.stderr)
-        return 2
+def validate_extensions(report):
+    """Validate optional traceable advantages/roadmap without requiring verbose reports."""
+    errors = []
+    advantages = report.get("advantages", [])
+    roadmap = report.get("roadmap", [])
+    if not isinstance(advantages, list) or not isinstance(roadmap, list):
+        return ["advantages and roadmap must be arrays"]
+    ids = {}
+    for item in advantages:
+        if not isinstance(item, dict):
+            errors.append("advantage must be object")
+            continue
+        for field in ("id", "source_url", "observed_at", "evidence_level", "transfer_decision", "user_mechanism", "our_synthesis", "success_metric"):
+            if not isinstance(item.get(field), str) or not item[field].strip():
+                errors.append(f"advantage: nonempty {field} required")
+        identifier = item.get("id")
+        if isinstance(identifier, str):
+            if identifier in ids:
+                errors.append("duplicate advantage id")
+            ids[identifier] = item
+        url = urlparse(item.get("source_url") if isinstance(item.get("source_url"), str) else "")
+        if url.scheme not in {"https", "http"} or not url.netloc:
+            errors.append("advantage: source_url must be HTTP(S) URL")
+        try:
+            value = item.get("observed_at")
+            if not isinstance(value, str) or date.fromisoformat(value).isoformat() != value:
+                raise ValueError()
+        except (ValueError, TypeError):
+            errors.append("advantage: observed_at must be YYYY-MM-DD")
+        if item.get("evidence_level") not in ("E1", "E2", "E3"):
+            errors.append("advantage: invalid evidence_level")
+        if item.get("transfer_decision") not in ("Adopt", "Adapt", "Experiment", "Reject"):
+            errors.append("advantage: invalid transfer_decision")
+    task_ids = set()
+    for item in roadmap:
+        if not isinstance(item, dict):
+            errors.append("roadmap task must be object")
+            continue
+        for field in ("id", "task", "success_criteria"):
+            if not isinstance(item.get(field), str) or not item[field].strip():
+                errors.append(f"roadmap: nonempty {field} required")
+        identifier = item.get("id")
+        if isinstance(identifier, str):
+            if identifier in task_ids:
+                errors.append("duplicate roadmap id")
+            task_ids.add(identifier)
+        if item.get("priority") not in ("P0", "P1", "P2"):
+            errors.append("roadmap: invalid priority")
+        if item.get("kind") not in ("validate", "implement"):
+            errors.append("roadmap: kind must be validate or implement")
+        refs = item.get("advantage_ids", [])
+        if not isinstance(refs, list) or any(not isinstance(x, str) or x not in ids for x in refs):
+            errors.append("roadmap: unknown advantage reference")
+            continue
+        if item.get("kind") == "implement" and any(ids[x].get("transfer_decision") == "Reject" for x in refs):
+            errors.append("roadmap: cannot implement rejected advantage")
+        if item.get("priority") == "P0" and item.get("kind") == "implement" and refs and all(ids[x].get("evidence_level") == "E3" for x in refs):
+            errors.append("roadmap: E3-only P0 requires validation before implementation")
+    return errors
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("report")
+    parser.add_argument("--strict", action="store_true", help="Exit 3 unless a build report is acceptance eligible")
+    args = parser.parse_args(argv)
     try:
-        report = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+        report = json.loads(Path(args.report).read_text(encoding="utf-8"))
     except (OSError, ValueError) as exc:
         print(f"Cannot load report: {exc}", file=sys.stderr)
         return 2
@@ -79,7 +160,7 @@ def main():
         print("INVALID\n" + "\n".join("- " + e for e in errors), file=sys.stderr)
         return 1
     print(json.dumps(result, indent=2, ensure_ascii=False))
-    return 0
+    return 3 if args.strict and not result["acceptance_eligible"] else 0
 
 if __name__ == "__main__":
     raise SystemExit(main())

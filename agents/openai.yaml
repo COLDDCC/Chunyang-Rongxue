@@ -1,0 +1,4 @@
+interface:
+  display_name: "春阳融雪"
+  short_description: "学习竞品的可验证优势，融合为适合自己产品的改进，并以证据验收结果"
+  default_prompt: "使用 $chunyang-rongxue 分析这个产品及竞品，先提交有证据的改进方案。"

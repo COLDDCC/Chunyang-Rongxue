@@ -26,6 +26,46 @@ The stdlib-only validator `scripts/audit.py` reads a JSON report:
 }
 ```
 
-Scores may be omitted for unassessed dimensions. Scores require a nonblank evidence field. Validator refuses unsupported status values and blocking FAIL; prints whether assessment has full coverage and is eligible for acceptance. It **cannot verify evidence truth** or automatically measure production UX.
+Scores may be omitted for unassessed dimensions. Scores require a nonblank evidence field. Validator rejects unsupported status values. A FAIL blocks acceptance but does not invalidate the report; use --strict for a nonzero acceptance exit code. It **cannot verify evidence truth** or automatically measure production UX.
 
 Run: `python3 scripts/audit.py examples/sample-report.json`.
+
+## v1.1 rules and CI
+
+N/A score: `{"not_applicable": true, "reason": "Private employee tool"}`.
+Its weight must be zero and its score absent or null. Redistribute weights to total
+100 before comparison. Explicit N/A is excluded from coverage; a missing score is
+still unknown even at zero weight. At least one scored applicable dimension is required.
+
+Plan never sets `acceptance_eligible`; complete coverage and resolved gates produce
+`assessment_status: plan_complete`, otherwise `plan_incomplete`. This status only
+summarizes the scorecard/gates, not the completeness of the whole written proposal.
+Build can be `acceptance_eligible` or `blocked`. Eligibility is not proof of deployment.
+Do not mark gates pass without evidence; explain gate N/A and evidence in the narrative.
+
+Exit codes: 0 = structurally valid report (may have blockers); 1 = invalid contract;
+2 = unreadable/invalid JSON or CLI usage; 3 = valid report blocked by `--strict`.
+Run `python3 scripts/audit.py report.json --strict` for **build acceptance CI**.
+Plans and the intentionally partial sample do not belong in acceptance CI.
+
+[JSON Schema](../schema/report.schema.json) supplies editor shape validation.
+The Python validator additionally checks weight sums, N/A weights, references and
+priority relationships. Run it even when schema validation passes.
+
+## Optional structured trace
+
+Add `advantages` with unique `id`, HTTP(S) `source_url`, `observed_at` (YYYY-MM-DD),
+`evidence_level` (E1/E2/E3), `transfer_decision` (Adopt/Adapt/Experiment/Reject),
+`user_mechanism`, `our_synthesis`, and `success_metric`.
+
+Add `roadmap` with unique `id`, `task`, `priority` (P0/P1/P2), `kind`
+(validate/implement), `success_criteria`, and optional `advantage_ids` referencing
+existing advantages. An implementation cannot reference a rejected advantage.
+E3-only evidence cannot justify P0 implementation; P0 validation is allowed.
+Mixed evidence still needs human judgment that the stronger source supports the task.
+
+Keep JSON as the source for these tables; do not maintain a separate CSV copy.
+CSV/Markdown templates remain available for lightweight narrative-only work.
+Generate tables with `python3 scripts/render_report.py report.json report.md`.
+Keep screenshots, test logs, source excerpts and long-form rationale as linked evidence;
+never invent evidence merely to satisfy required fields.

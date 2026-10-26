@@ -3,7 +3,7 @@ from scripts.audit import validate, DIMENSIONS, GATES
 
 def base():
     return {
-        "product": "test", "mode": "plan",
+        "product": "test", "mode": "build",
         "weights": dict(zip(DIMENSIONS, (15, 20, 20, 15, 10, 10, 10))),
         "scores": {k: {"score": 80, "evidence": "Observed test"} for k in DIMENSIONS},
         "gates": {k: "pass" for k in GATES},

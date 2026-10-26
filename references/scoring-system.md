@@ -11,7 +11,7 @@
 | Performance and mobile experience | 10 |
 | Reliability and accessibility | 10 |
 
-Use scores 0–100 for each dimension only with sufficient direct or documented evidence. Weighted result = Σ(weight × score) / Σ(weight) for all **scored** dimensions. If missing any dimension, report **partial coverage** and avoid presenting the number as a fully comparable overall score. Capture rationale and evidence for every score. Don't confuse an agent's taste with user research.
+Use scores 0–100 for each dimension only with sufficient direct or documented evidence. Weighted result = Σ(weight × score) / Σ(weight) for all **scored** dimensions. Exclude explicitly justified N/A dimensions with zero weight. If missing any applicable dimension, report **partial coverage** and avoid presenting the number as a fully comparable overall score. Capture rationale and evidence for every score. Don't confuse an agent's taste with user research.
 
 Weights may change by use case, but must be declared before comparison, nonnegative, and add to 100. Compare competitors and our product with identical rubric and tasks. Don't announce a ranking if score coverage/conditions differ.
 
