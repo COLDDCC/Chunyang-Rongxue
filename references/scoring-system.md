@@ -1,6 +1,10 @@
 # Evidence-based scoring
 
-## Default weights (sum to 100)
+## Select a rubric first
+
+The dimensions below are defaults for digital products, not a universal definition of quality. For services, processes, physical objects or other experiences, declare suitable dimensions and measures before comparing. Apply gates only where relevant; retain safety, task correctness and material regressions when applicable. Explain N/A. For custom narrative rubrics use the same evidence, coverage and comparable-condition rules. The bundled JSON validator supports only its fixed seven dimensions; do not force-fit unrelated criteria or claim it validates a custom rubric.
+
+## Digital defaults (sum to 100)
 | Dimension | Weight |
 |---|---:|
 | Visual design | 15 |

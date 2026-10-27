@@ -2,7 +2,7 @@
 
 > 博采众长，去芜存菁，融会贯通，青出于蓝。
 
-A reusable competitive advantage fusion and product evolution Agent Skill for websites, mini programs, SaaS, and digital tools.
+A reusable competitive advantage fusion and product evolution Agent Skill for products, services, workflows, tools, content, and physical experiences. Apply domain-specific practices only where relevant.
 
 See [SKILL.md](SKILL.md) for agent instructions, [the origin story](docs/origin.md), and [the complete workflow](SKILL.md#five-stage-loop-观吸化创验).
 
@@ -22,7 +22,7 @@ The skill supports **Plan** (research without changing code) and **Build** (auth
 - Adjustable, weighted 100-point scorecard with non-negotiable quality gates
 - Practical templates, acceptance checks, and an offline report validation script
 
-## Install (v1.1.0)
+## Install (v1.2.0)
 
 Clone into your agent's skill directory using the matching folder name:
 
@@ -43,6 +43,10 @@ The sample is illustrative and deliberately incomplete.
 See [evaluation prompts](tests/trigger-prompts.json) and [case protocol](examples/case-01/README.md).
 A positive description review is not a measured trigger rate.
 Repository releases can include documentation; agents only need SKILL.md and its linked resources.
+
+## v1.2.0 changes
+
+Add a [universal execution protocol](references/universal-execution.md): existing-capability inventory, task-based benchmarking, object-specific criteria, baseline failure classification, smallest reviewable increments and separate delivery states. Keep web/medical/media practices conditional. Expand routing fixtures and offline transfer scenarios; fixtures are not measured trigger accuracy. The existing JSON contract remains unchanged and validates digital scorecards only.
 
 ## v1.1.0 changes
 

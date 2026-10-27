@@ -65,6 +65,22 @@
     {
       "prompt": "修复sitemap生成脚本。",
       "should_trigger": false
+    },
+    {
+      "prompt": "用春阳融雪学习标杆咖啡店，改进我们的点单取餐流程。",
+      "should_trigger": true
+    },
+    {
+      "prompt": "比较三款同类收纳产品的使用与维护，提出改进方案。",
+      "should_trigger": true
+    },
+    {
+      "prompt": "借鉴其他 API 的错误恢复机制，优化我们的开发者体验。",
+      "should_trigger": true
+    },
+    {
+      "prompt": "用春阳融雪比较培训课程，让学员更快完成实际任务。",
+      "should_trigger": true
     }
   ]
 }

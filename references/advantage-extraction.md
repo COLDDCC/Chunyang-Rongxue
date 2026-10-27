@@ -1,10 +1,10 @@
 # Advantage extraction · 吸
 
 For EACH candidate advantage record:
-- Dimension / competitor / exact relevant URL.
+- Applicable dimension / role model / exact source URL or offline artifact identifier and evidence location.
 - What users do and why it works (mechanism), with evidence level and date.
 - Target user fit, usability and accessibility trade-offs.
-- Costs: engineering, maintenance, localization, legal/IP, performance and privacy.
+- Relevant costs: implementation, operations, maintenance, training, materials, localization, legal/IP, performance and privacy.
 - Transfer decision: **Adopt** (principle only), **Adapt**, **Experiment**, or **Reject**.
 - Our original synthesis: how to deliver the benefit with our own voice.
 - Verification metric and regression risk.
